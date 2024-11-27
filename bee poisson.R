@@ -64,17 +64,3 @@ p_hat = invlogit(y_hat)
 
 plot(x, bdat$MAP, xlab = "E. nigrita count", ylab = "MAP")
 lines(x_pred, p_hat, type="l") 
-
-#glm model of log data 
-subbdat = bdat[bdat$Eulaema_nigrita != 0,]
-modl = glm(subbdat$logcount ~ subbdat$MAP, family="poisson")
-summary(modl)
-coefs1 = summary(modl)$coef
-
-x = subbdat$logcount
-x_pred = seq(from=min(x), to=max(x), by=0.01)
-y_hat = coefs1[1,1] + coefs1[2,1]*x_pred
-p_hat = invlogit(y_hat)
-
-plot(x, bdat$MAP, xlab = "log(E. nigrita count)", ylab = "MAP")
-lines(x_pred, p_hat, type="l") 
