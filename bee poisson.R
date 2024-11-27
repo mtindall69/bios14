@@ -2,15 +2,9 @@
 setwd("~/LU CLASS OF 2026/BIOS13-14/BIOS14- Processing and Analysis of Biological Data/data/")
 
 bdat = read.csv("Eulaema.csv", fileEncoding = "Latin1")
-# count is y variable
-# test effects of altitude, temp(MAT, Tseason), precip(MAP, Pseason), 
-# forest cover, and land use 
-# location directly related to each of these
-
-mets = c("altitude", "MAT", "MAP", "Tseason", "Pseason", "forest", "lu_het")
 
 library(psych)
-#library(tidyverse)
+library(tidyverse)
 
 pairs.panels(bdat)
 pairs.panels(bdat |> select(Eulaema_nigrita, altitude, MAT, MAP, Tseason,
@@ -19,14 +13,20 @@ pairs.panels(bdat |> select(Eulaema_nigrita, altitude, MAT, MAP, Tseason,
 #log count data
 bdat$logcount = log(bdat$Eulaema_nigrita+0.001)
 pairs.panels(bdat |> select(logcount, altitude, MAT, MAP, Tseason,
-                             Pseason, forest., lu_het))
+                            Pseason, forest., lu_het))
 
-#glm model 
-mod = glm(bdat$Eulaema_nigrita ~ bdat$MAP, family="poisson")
-summary(mod)
+#glm model with all variables independent
 mod = glm(bdat$Eulaema_nigrita ~ bdat$SA * bdat$SU * bdat$method * bdat$effort 
           * bdat$altitude * bdat$MAT * bdat$MAP * bdat$Tseason * bdat$Pseason 
           * bdat$forest. * bdat$lu_het, family="poisson")
+summary(mod)
+
+mod = glm(bdat$Eulaema_nigrita ~ bdat$MAP, family="poisson")
+summary(mod)
+
+mod = glm(bdat$Eulaema_nigrita ~ bdat$MAP * bdat$forest., family="poisson")
+summary(mod)
+
 
 
 coefs = summary(mod)$coef
