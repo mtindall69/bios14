@@ -1,4 +1,5 @@
 #BIOS14 Exercise 6: Bee Distribution
+setwd("~/LU CLASS OF 2026/BIOS13-14/BIOS14- Processing and Analysis of Biological Data/data/")
 
 bdat = read.csv("Eulaema.csv", fileEncoding = "Latin1")
 # count is y variable
@@ -8,16 +9,16 @@ bdat = read.csv("Eulaema.csv", fileEncoding = "Latin1")
 
 mets = c("altitude", "MAT", "MAP", "Tseason", "Pseason", "forest", "lu_het")
 
-y = bdat$Eulaema_nigrita
-
 library(psych)
 #library(tidyverse)
 
 pairs.panels(bdat)
+pairs.panels(bdat |> select(Eulaema_nigrita, altitude, MAT, MAP, Tseason,
+                            Pseason, forest., lu_het))
 
 #log count data
 bdat$logcount = log(bdat$Eulaema_nigrita+0.001)
-pairs.panels(bdat %>% select(logcount, altitude, MAT, MAP, Tseason,
+pairs.panels(bdat |> select(logcount, altitude, MAT, MAP, Tseason,
                              Pseason, forest., lu_het))
 
 #glm model 
