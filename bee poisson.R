@@ -15,20 +15,43 @@ bdat$logcount = log(bdat$Eulaema_nigrita+0.001)
 pairs.panels(bdat |> select(logcount, altitude, MAT, MAP, Tseason,
                             Pseason, forest., lu_het))
 
-#glm model with all variables independent
-mod = glm(bdat$Eulaema_nigrita ~ bdat$SA * bdat$SU * bdat$method * bdat$effort 
-          * bdat$altitude * bdat$MAT * bdat$MAP * bdat$Tseason * bdat$Pseason 
-          * bdat$forest. * bdat$lu_het, family="poisson")
+#glm model with poisson distribution
+mod = glm(bdat$Eulaema_nigrita ~ bdat$SA + bdat$SU + bdat$method + bdat$effort
+           + bdat$altitude + bdat$MAT + bdat$MAP + bdat$Tseason + bdat$Pseason
+           + bdat$forest. + bdat$lu_het, family="poisson")
 summary(mod)
 
 mod = glm(bdat$Eulaema_nigrita ~ bdat$MAP, family="poisson")
 summary(mod)
 
-mod = glm(bdat$Eulaema_nigrita ~ bdat$MAP * bdat$forest., family="poisson")
+mod = glm(bdat$Eulaema_nigrita ~ bdat$MAP + bdat$forest., family="poisson")
 summary(mod)
 
+#negative binomial errors model
+library(MASS)
+mod = glm.nb(bdat$Eulaema_nigrita ~ bdat$SA + bdat$SU + bdat$method + bdat$effort
+             + bdat$altitude + bdat$MAT + bdat$MAP + bdat$Tseason + bdat$Pseason
+             + bdat$forest. + bdat$lu_het)
+summary(mod)
+
+mod = glm.nb(bdat$Eulaema_nigrita ~ bdat$MAP)
+summary(mod)
+
+mod = glm.nb(bdat$Eulaema_nigrita ~ bdat$MAP + bdat$forest.)
+summary(mod)
+
+#null model for random factors
+library(glmmTMB)
+rmod = glmmTMB(bdat$Eulaema_nigrita ~ 1 + (1|bdat$SA))
+summary(rmod)
+
+#mixed effect model
+mem = glmmTMB(bdat$Eulaema_nigrita ~ bdat$MAP + bdat$forest. + (1|bdat$SA) 
+              + (1|bdat$method))
+summary(mem)
 
 
+# plot????
 coefs = summary(mod)$coef
 
 logit = function(x) log(x/(1-x))
