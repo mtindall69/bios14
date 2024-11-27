@@ -1,7 +1,6 @@
 #BIOS14 Exercise 6: Bee Distribution
 
-bdat = read.csv("BIOS14- Processing and Analysis of Biological Data/data/Eulaema.csv",
-                fileEncoding = "Latin1")
+bdat = read.csv("Eulaema.csv", fileEncoding = "Latin1")
 # count is y variable
 # test effects of altitude, temp(MAT, Tseason), precip(MAP, Pseason), 
 # forest cover, and land use 
