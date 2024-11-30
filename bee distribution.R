@@ -3,7 +3,7 @@ setwd("~/LU CLASS OF 2026/BIOS13-14/BIOS14- Processing and Analysis of Biologica
 
 bdat = read.csv("Eulaema.csv", fileEncoding = "Latin1")
 
-#library(psych)
+library(psych)
 library(tidyverse)
 
 pairs.panels(bdat)
