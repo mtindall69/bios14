@@ -1,6 +1,7 @@
 #BIOS14 13-11 Exercise 3: Butterfly ANOVA
 
-dat = read.csv("~/LU CLASS OF 2026/BIOS13-14/BIOS14- Processing and Analysis of Biological Data/data/butterflies.csv")
+setwd("~/LU CLASS OF 2026/BIOS13-14/BIOS14- Processing and Analysis of Biological Data/data")
+dat = read.csv("butterflies.csv")
   
 #dat$MaternalHost = paste0(dat$MaternalHost, "M")
 #dat$LarvalHost = paste0(dat$LarvalHost, "L")
