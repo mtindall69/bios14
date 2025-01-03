@@ -43,7 +43,7 @@ legend("topright", legend=c("Females", "Males"), pch=15,
 cop_count <- table(all_data$cop, all_data$sp)
 percent_cop <- sweep(cop_count,2,sp_count,FUN="/")
 print(percent_cop)
-#CV success 10% higher than than CS (31.7% to 21.6%)
+#CV success higher than than CS (31.7% to 21.6%)
 #female success higher than male success for both species
 success = all_data[all_data$cop=="1",]
 st <- table(success$sex, success$sp)
@@ -51,12 +51,10 @@ pst <- (st/ct)
 print(pst)
 barplot(pst, beside = TRUE, ylim = c(0,0.5),
         xlab = "Species", ylab = "Percent Mating Success", 
-        main = "Damselfly Mating Success by Species and Sex",
+        main = "Damselfly Mating Success",
         col = c("steelblue", "darkorange")) 
 legend("topleft", legend=c("Females", "Males"), pch=15, 
        col=c("steelblue", "darkorange"))
-library(ggplot2)
-ggplot(success, aes(x=sp, y=))
 
 #body length
 mean(all_data$tbl)
@@ -69,4 +67,3 @@ mean(cs_data$tbl)
 hist(cs_data$tbl)
 mean(cv_data$tbl)
 hist(cv_data$tbl)
-
